@@ -1,4 +1,4 @@
-/* ACM Class System (I) Fall Assignment 1 
+/* ACM Class System (I) Fall Assignment 1
  *
  *
  * Implement your naive adder here

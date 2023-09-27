@@ -19,23 +19,23 @@ module adder(
         output      [15:0]          sum,
         output                      carry
     );
-	wire [15:0] c;
-	assign carry = c[15];
-	full_adder fadd[15:0](
-    	.a(a),
-    	.b(b),
-    	.cin({c[14:0], 1'b0}),
-    	.s(sum),
-    	.cout(c)
-	);
-    
+    wire [15:0] c;
+    assign carry = c[15];
+    full_adder fadd[15:0](
+                   .a(a),
+                   .b(b),
+                   .cin({c[14:0], 1'b0}),
+                   .s(sum),
+                   .cout(c)
+               );
+
 endmodule //adder
 
 module full_adder(
         input a, b, cin,
         output s, cout
     );
-	assign s = a ^ b ^ cin;
-	assign cout = (a & b) | (a & cin) | (b & cin);
+    assign s = a ^ b ^ cin;
+    assign cout = (a & b) | (a & cin) | (b & cin);
 
 endmodule //full_adder
