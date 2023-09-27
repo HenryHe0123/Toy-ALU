@@ -1,4 +1,4 @@
-/* ACM Class System (I) Fall Assignment 1 
+/* ACM Class System (I) Fall Assignment 1
  *
  *
  * Implement your naive adder here
@@ -14,15 +14,28 @@
  */
 
 module adder(
-	// TODO: Write the ports of this module here
-	//
-	// Hint: 
-	//   The module needs 4 ports, 
-	//     the first 2 ports are 16-bit unsigned numbers as the inputs of the adder
-	//     the third port is a 16-bit unsigned number as the output
-	//	   the forth port is a one bit port as the carry flag
-	// 
-);
-	// TODO: Implement this module here
-	
-endmodule
+        input       [15:0]          a,
+        input       [15:0]          b,
+        output      [15:0]          sum,
+        output                      carry
+    );
+	wire [15:0] c;
+	assign carry = c[15];
+	full_adder fadd[15:0](
+    	.a(a),
+    	.b(b),
+    	.cin({c[14:0], 1'b0}),
+    	.s(sum),
+    	.cout(c)
+	);
+    
+endmodule //adder
+
+module full_adder(
+        input a, b, cin,
+        output s, cout
+    );
+	assign s = a ^ b ^ cin;
+	assign cout = (a & b) | (a & cin) | (b & cin);
+
+endmodule //full_adder

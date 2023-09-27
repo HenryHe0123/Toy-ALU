@@ -1,27 +1,24 @@
-/* ACM Class System (I) Fall Assignment 1 
- *
- *
- * Implement your naive adder here
- * 
- * GUIDE:
- *   1. Create a RTL project in Vivado
- *   2. Put this file into `Sources'
- *   3. Put `test_adder.v' into `Simulation Sources'
- *   4. Run Behavioral Simulation
- *   5. Make sure to run at least 100 steps during the simulation (usually 100ns)
- *   6. You can see the results in `Tcl console'
- *
- */
+/*
+    Problem:
+    https://acm.sjtu.edu.cn/OnlineJudge/problem?problem_id=1250
+ 
+    Carry-lookahead adder (32 bit), previously written in the summer
+*/
 
-module adder(
-        input       [15:0]          a,
-        input       [15:0]          b,
-        output      [15:0]          sum,
-        output                      carry
+module Add(
+        input       [31:0]          a,
+        input       [31:0]          b,
+        output reg  [31:0]          sum
     );
-    CLA16 add(.a(a), .b(b), .s(sum), .cin(1'b0), .cout(carry));
 
-endmodule //adder
+    wire [31:0] s;
+    always @(*) #1 sum = s;
+
+    wire c16;
+    CLA16 a0(.a(a[15: 0]), .b(b[15: 0]), .s(s[15: 0]), .cin(1'b0), .g(c16));
+    CLA16 a1(.a(a[31:16]), .b(b[31:16]), .s(s[31:16]), .cin(c16));
+
+endmodule //Add
 
 
 module CLA_processor(
