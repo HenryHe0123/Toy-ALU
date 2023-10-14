@@ -100,7 +100,7 @@ module adder_tb;
         x=32'h00800010;
         y=32'h80800001;
         //underflow, ans = 0000001E, overflow = 2'b10
-        //debug: the change of overflow (10/01) is much faster than z, we have choose the delay carefully
+        //debug: the change of overflow (10/01) is much faster than z, we have to choose the delay carefully
         #100
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h0000001E || overflow != 2'b10) begin
