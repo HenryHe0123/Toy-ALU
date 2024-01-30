@@ -2,7 +2,7 @@
 `timescale 1ns/1ps
 
 module adder_tb;
-    reg clk, rst;
+    reg clk, rst, flag;
     reg [31:0] x, y;
     wire [31:0] z;
     wire [1:0] overflow;
@@ -20,8 +20,9 @@ module adder_tb;
 
     initial begin
         clk = 0;
-        rst = 1'b0;
-        #20 rst = 1'b1;
+        rst = 0;
+        flag = 1;
+        #20 rst = 1;
 
         /* test cases from https://blog.csdn.net/Phoenix_ZengHao/article/details/118760774 */
 
@@ -32,6 +33,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'b00111111101010100011110101110001 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -44,6 +46,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h1FFFFFF5 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -56,6 +59,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h4248CCCC || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -68,6 +72,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h3F333334 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -80,6 +85,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (overflow != 2'b11) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -92,6 +98,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (overflow != 2'b11) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -105,6 +112,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h0000001E || overflow != 2'b10) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -117,6 +125,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h7FFFFFFF || overflow != 2'b01) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -130,6 +139,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h4e594b24 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -141,6 +151,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'hce046b88 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -152,6 +163,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'hcee473d0 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -163,6 +175,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h4da7d91c || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -174,6 +187,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h4da4f1c8 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -185,6 +199,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'hce478dac || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -196,6 +211,7 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'hcf39e25c || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
@@ -207,9 +223,17 @@ module adder_tb;
          $display("%b + %b = %b, overflow:%b", x, y, z, overflow);
         if (z != 32'h4ba11e40 || overflow != 2'b00) begin
             $display("Wrong Answer!");
+            flag = 0;
         end
         else begin
             $display("Correct!");
+        end
+
+        if (flag == 1) begin
+            $display("All test cases passed!");
+        end
+        else begin
+            $display("Some test cases failed!");
         end
 
         $finish;

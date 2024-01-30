@@ -48,21 +48,21 @@ module adder(
                 //check
                 if((e_x == 8'd255 && m_x[22:0] != 0) || (e_y == 8'd255 && m_y[22:0] != 0)) begin //NaN
                     overflow <= 2'b11;
-                    state_next = over;
+                    state_next <= over;
                     m_z <= 23'b1; //z = NaN
                     e_z <= 8'd255;
                     s_z <= 1'b1;
                 end
                 else if(e_x == 8'd255 && m_x[22:0] == 0) begin //x is Inf
                     overflow <= 2'b11;
-                    state_next = over;
+                    state_next <= over;
                     m_z <= 23'b0;
                     e_z <= 8'd255;
                     s_z <= s_x;
                 end
                 else if(e_y == 8'd255 && m_y[22:0] == 0) begin //y is Inf
                     overflow <= 2'b11;
-                    state_next = over;
+                    state_next <= over;
                     m_z <= 23'b0;
                     e_z <= 8'd255;
                     s_z <= s_y;
@@ -76,7 +76,7 @@ module adder(
                         m_y[23] <= 0;
                     end
                     overflow <= 2'b00;
-                    state_next = zerocheck;
+                    state_next <= zerocheck;
                 end
             end
 
@@ -203,7 +203,7 @@ module adder(
             end
 
             over: begin
-                z = {s_z, e_z[7:0], m_z[22:0]};
+                z <= {s_z, e_z[7:0], m_z[22:0]};
                 if(overflow == 2'b11) begin //unnormalized input, jumped from start directly
                     state_next <= start;
                 end
